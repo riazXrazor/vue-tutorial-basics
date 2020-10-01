@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{
+                    message: '',
+                    list: [
+                        'subha',
+                        'riaz',
+                        'riya',
+                        'jasbir'
+                    ]
+                }
+            ,
+            computed:{
+                noofsers(){
+                    return this.list.length
+                },
+                startswithr(){
+                    return this.list.filter(name => name.startsWith('r'))
+                }  
+            },
+            methods:{
+                handlechange: function(e) {
+                    this.message = e.target.value
+                },
+                addHandler: function(){
+                    this.list.push(this.message)
+                    this.message = '';
+                },
+                removeHandler: function(index){
+                    this.list.splice(index,1)
+                    console.log(this.list)
+                }
+            },
+            template: `<div>
+                 <input v-model="message" />
+                 <br>
+                 No of people : {{ noofsers }}
+                 <br>
+                 <button @click="addHandler">Add</button>
+                 <!-- <div v-if="message !== 'riya'">ok</div> -->
+                 <ul>
+                    <li v-for="(name, i) in list">{{ name }} {{ i }}  <button @click="() => removeHandler(i)">X</button></li>
+                </ul>
+                <hr/>
+                <ul>
+                    <li v-for="(name, i) in startswithr">{{ name }} {{ i }} </li>
+                </ul>
+
+                <hr/>
+                <ul>
+                    <li v-for="(name, i) in list" v-if="name.startsWith('r')">{{ name }} {{ i }} </li>
+                </ul>
+                </div>`
+        })
+    </script>
+</body>
+</html>
